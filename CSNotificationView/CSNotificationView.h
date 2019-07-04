@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, CSNotificationViewStyle) {
     CSNotificationViewStyleError
 };
 
-typedef void(^CSVoidBlock)();
+typedef void(^CSVoidBlock)(void);
 
 @interface CSNotificationView : UIView
 
@@ -73,14 +73,14 @@ typedef void(^CSVoidBlock)();
  * @param animated Should a change in `showing` be animated?
  * @param completion `nil` or a callback called on the main thread after changes to the interface are completed.
  */
-- (void)setVisible:(BOOL)showing animated:(BOOL)animated completion:(void (^)())completion;
+- (void)setVisible:(BOOL)showing animated:(BOOL)animated completion:(void (^)(void))completion;
 
 /**
  * Convenience method to dismiss with a(nother) predefined style and / or message.
  */
 - (void)dismissWithStyle:(CSNotificationViewStyle)style message:(NSString*)message duration:(NSTimeInterval)duration animated:(BOOL)animated;
 
-@property (readonly, nonatomic, getter = isShowing) BOOL visible;
+@property (readonly, nonatomic, getter = isVisible) BOOL visible;
 
 #pragma mark - visible properties
 
