@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author       = 'Christian Schwarz'
   s.source       = { :git => 'https://github.com/problame/CSNotificationView.git', :tag => s.version.to_s }
   s.platform     = :ios
-  s.ios.deployment_target = "7.0"
+  s.ios.deployment_target = "9.0"
   s.requires_arc = true
   s.source_files = 'CSNotificationView/*.{h,m}'
   s.resource_bundle = { 'CSNotificationView' => ['CSNotificationView/Resources/*.png'] }

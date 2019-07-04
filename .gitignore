@@ -18,3 +18,4 @@ doxygenWarnings.txt
 *.xccheckout
 
 Pods/
+Example/CSNotificationViewDemo.xcworkspace/xcshareddata
