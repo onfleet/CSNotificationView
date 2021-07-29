@@ -220,21 +220,17 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-CSNotificationViewDemo/Pods-CSNotificationViewDemo-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-CSNotificationViewDemo/Pods-CSNotificationViewDemo-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/CSNotificationView/CSNotificationView.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/CSNotificationView.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CSNotificationViewDemo/Pods-CSNotificationViewDemo-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CSNotificationViewDemo/Pods-CSNotificationViewDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -374,7 +370,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSNotificationViewDemo/CSNotificationViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "CSNotificationViewDemo/CSNotificationViewDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cschwarz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = CSNotificationViewDemo;
 				WRAPPER_EXTENSION = app;
@@ -391,7 +387,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSNotificationViewDemo/CSNotificationViewDemo-Prefix.pch";
 				INFOPLIST_FILE = "CSNotificationViewDemo/CSNotificationViewDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cschwarz.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = CSNotificationViewDemo;
 				WRAPPER_EXTENSION = app;
