@@ -394,12 +394,12 @@
 {
     CGFloat top = 0;
     
-    if (self.parentNavigationController.presentingViewController == nil) {
+    if (self.parentNavigationController.presentingViewController == nil || self.parentNavigationController.modalPresentationStyle == UIModalPresentationFullScreen) {
         top = MIN([UIApplication sharedApplication].statusBarFrame.size.height, [UIApplication sharedApplication].statusBarFrame.size.width);
     }
     
     if (self.parentNavigationController && !self.parentNavigationController.navigationBarHidden) {
-        top += CGRectGetHeight(self.parentNavigationController.navigationBar.bounds);
+        top += CGRectGetHeight(self.parentNavigationController.navigationBar.frame);
     }
     
     return top;

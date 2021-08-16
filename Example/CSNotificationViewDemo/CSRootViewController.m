@@ -45,10 +45,18 @@
 
 - (IBAction)showModal:(id)sender
 {
+    [self showModalFullscreen:NO];
+}
+
+- (void)showModalFullscreen:(BOOL)isFullscreen
+{
     UIViewController *modalController = [[UIViewController alloc] init];
     modalController.view.backgroundColor = [UIColor whiteColor];
     modalController.navigationItem.title = @"Modal";
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalController];
+    if (@available(iOS 13.0, *)) {
+        navController.modalPresentationStyle = isFullscreen ? UIModalPresentationFullScreen : UIModalPresentationAutomatic;
+    }
     
     __weak UIViewController *weakModalController = modalController;
 
@@ -61,11 +69,14 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((5.0) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [weakModalController dismissViewControllerAnimated:YES completion:nil];
     });
-    
 }
 
 - (IBAction)showPermanent:(id)sender
 {
+    [self showModalFullscreen:YES];
+    
+    return;
+    
     if (self.permanentNotification) {
         return;
     }
