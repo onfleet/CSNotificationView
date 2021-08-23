@@ -72,8 +72,6 @@
              style:(CSNotificationViewStyle)style
            message:(NSString *)message
 {
-    
-    
     [CSNotificationView showInViewController:viewController
                          tintColor:[CSNotificationView blurTintColorForStyle:style]
                              image:[CSNotificationView imageForStyle:style]
@@ -263,7 +261,7 @@
 
     
     CGFloat symbolViewWidth = self.symbolView.tag != kCSNotificationViewEmptySymbolViewTag ?
-                                kCSNotificationViewSymbolViewSidelength : 0.0f;
+                                kCSNotificationViewSymbolViewSidelength : 6.0f;
     CGFloat symbolViewHeight = kCSNotificationViewSymbolViewSidelength;
     
     NSDictionary* metrics =
@@ -271,7 +269,7 @@
           @"symbolViewHeight":[NSNumber numberWithFloat:symbolViewHeight]};
     
     [self addConstraints:[NSLayoutConstraint
-        constraintsWithVisualFormat:@"H:|-(4)-[_symbolView(symbolViewWidth)]-(5)-[_textLabel]-(10)-|"
+        constraintsWithVisualFormat:@"H:|-(4)-[_symbolView(symbolViewWidth)]-(-1)-[_textLabel]-(10)-|"
                             options:0
                             metrics:metrics
                               views:NSDictionaryOfVariableBindings(_textLabel, _symbolView)]];
@@ -556,10 +554,25 @@
     
     switch (style) {
         case CSNotificationViewStyleSuccess:
-            matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"checkmark" ofType:@"png"]];
+            if (@available(iOS 13.0, *)) {
+                UIImageSymbolConfiguration *wight = [UIImageSymbolConfiguration configurationWithWeight:UIImageSymbolWeightRegular];
+                UIImageSymbolConfiguration *size = [UIImageSymbolConfiguration configurationWithPointSize:20];
+                UIImageSymbolConfiguration *conf = [wight configurationByApplyingConfiguration:size];
+                matchedImage = [UIImage systemImageNamed:@"checkmark.circle.fill" withConfiguration:conf];
+            } else {
+                matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"checkmark" ofType:@"png"]];
+            }
             break;
         case CSNotificationViewStyleError:
-            matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"exclamationMark" ofType:@"png"]];
+            if (@available(iOS 13.0, *)) {
+                UIImageSymbolConfiguration *wight = [UIImageSymbolConfiguration configurationWithWeight:UIImageSymbolWeightRegular];
+                UIImageSymbolConfiguration *size = [UIImageSymbolConfiguration configurationWithPointSize:20];
+                UIImageSymbolConfiguration *conf = [wight configurationByApplyingConfiguration:size];
+                matchedImage = [UIImage systemImageNamed:@"xmark.octagon.fill" withConfiguration:conf];
+            } else {
+                matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"exclamationMark" ofType:@"png"]];
+            }
+            
             break;
         default:
             break;
