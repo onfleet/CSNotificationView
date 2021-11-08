@@ -377,7 +377,7 @@
         weakself.tintColor = [CSNotificationView blurTintColorForStyle:style];
         
     } completion:^(BOOL finished) {
-        double delayInSeconds = 2.0;
+        double delayInSeconds = (double)duration;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [weakself setVisible:NO animated:animated completion:nil];
@@ -462,7 +462,8 @@
         imageView.backgroundColor = [UIColor clearColor];
         imageView.translatesAutoresizingMaskIntoConstraints = NO;
         imageView.contentMode = UIViewContentModeCenter;
-        imageView.image = [self imageFromAlphaChannelOfImage:self.image replacementColor:self.contentColor];
+        imageView.image = self.image;
+        imageView.tintColor = self.contentColor;
         _symbolView = imageView;
     } else {
         _symbolView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -524,24 +525,6 @@
     return textColor;
 }
 
-- (UIImage*)imageFromAlphaChannelOfImage:(UIImage*)image replacementColor:(UIColor*)tintColor
-{
-    if (!image) return nil;
-    NSParameterAssert([tintColor isKindOfClass:[UIColor class]]);
- 
-    //Credits: https://gist.github.com/omz/1102091
-    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, image.scale);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    [image drawInRect:rect];
-    CGContextSetFillColorWithColor(c, [tintColor CGColor]);
-    CGContextSetBlendMode(c, kCGBlendModeSourceAtop);
-    CGContextFillRect(c, rect);
-    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return result;
-}
-
 + (UIImage*)imageForStyle:(CSNotificationViewStyle)style
 {
     UIImage* matchedImage = nil;
@@ -563,6 +546,7 @@
                 matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"checkmark" ofType:@"png"]];
             }
             break;
+            
         case CSNotificationViewStyleError:
             if (@available(iOS 13.0, *)) {
                 UIImageSymbolConfiguration *wight = [UIImageSymbolConfiguration configurationWithWeight:UIImageSymbolWeightRegular];
@@ -574,6 +558,31 @@
             }
             
             break;
+            
+        case CSNotificationViewStyleErrorConnection:
+            if (@available(iOS 13.0, *)) {
+                UIImageSymbolConfiguration *wight = [UIImageSymbolConfiguration configurationWithWeight:UIImageSymbolWeightRegular];
+                UIImageSymbolConfiguration *size = [UIImageSymbolConfiguration configurationWithPointSize:20];
+                UIImageSymbolConfiguration *conf = [wight configurationByApplyingConfiguration:size];
+                matchedImage = [UIImage systemImageNamed:@"wifi.exclamationmark" withConfiguration:conf];
+            } else {
+                matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"exclamationMark" ofType:@"png"]];
+            }
+            
+            break;
+            
+        case CSNotificationViewStyleErrorDataStale:
+            if (@available(iOS 13.0, *)) {
+                UIImageSymbolConfiguration *wight = [UIImageSymbolConfiguration configurationWithWeight:UIImageSymbolWeightRegular];
+                UIImageSymbolConfiguration *size = [UIImageSymbolConfiguration configurationWithPointSize:20];
+                UIImageSymbolConfiguration *conf = [wight configurationByApplyingConfiguration:size];
+                matchedImage = [UIImage systemImageNamed:@"arrow.clockwise.circle.fill" withConfiguration:conf];
+            } else {
+                matchedImage = [UIImage imageWithContentsOfFile:[assetsBundle pathForResource:@"exclamationMark" ofType:@"png"]];
+            }
+            
+            break;
+            
         default:
             break;
     }
@@ -587,11 +596,9 @@
         case CSNotificationViewStyleSuccess:
             blurTintColor = [UIColor colorWithRed:0.21 green:0.72 blue:0.00 alpha:1.0];
             break;
-        case CSNotificationViewStyleError:
-            blurTintColor = [UIColor redColor];
-            break;
+
         default:
-            break;
+            blurTintColor = [UIColor redColor];
     }
     return blurTintColor;
 }

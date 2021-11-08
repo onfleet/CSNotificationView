@@ -14,7 +14,9 @@ static NSTimeInterval const kCSNotificationViewDefaultShowDuration = 2.0;
 
 typedef NS_ENUM(NSInteger, CSNotificationViewStyle) {
     CSNotificationViewStyleSuccess,
-    CSNotificationViewStyleError
+    CSNotificationViewStyleError,
+    CSNotificationViewStyleErrorConnection,
+    CSNotificationViewStyleErrorDataStale,
 };
 
 typedef void(^CSVoidBlock)(void);
