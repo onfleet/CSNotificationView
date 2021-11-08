@@ -374,7 +374,7 @@
         weakself.showingActivity = NO;
         weakself.image = [CSNotificationView imageForStyle:style];
         weakself.textLabel.text = message;
-        weakself.tintColor = [CSNotificationView blurTintColorForStyle:style];
+        //weakself.tintColor = [CSNotificationView blurTintColorForStyle:style];
         
     } completion:^(BOOL finished) {
         double delayInSeconds = (double)duration;
