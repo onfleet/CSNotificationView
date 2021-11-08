@@ -374,7 +374,7 @@
         weakself.showingActivity = NO;
         weakself.image = [CSNotificationView imageForStyle:style];
         weakself.textLabel.text = message;
-        //weakself.tintColor = [CSNotificationView blurTintColorForStyle:style];
+        weakself.tintColor = [CSNotificationView blurTintColorForStyle:style];
         
     } completion:^(BOOL finished) {
         double delayInSeconds = (double)duration;
@@ -462,8 +462,7 @@
         imageView.backgroundColor = [UIColor clearColor];
         imageView.translatesAutoresizingMaskIntoConstraints = NO;
         imageView.contentMode = UIViewContentModeCenter;
-        imageView.image = self.image;
-        imageView.tintColor = self.contentColor;
+        imageView.image = [self imageFromAlphaChannelOfImage:self.image replacementColor:[UIColor whiteColor]];
         _symbolView = imageView;
     } else {
         _symbolView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -483,6 +482,24 @@
         _image = image;
         [self updateSymbolView];
     }
+}
+
+- (UIImage*)imageFromAlphaChannelOfImage:(UIImage*)image replacementColor:(UIColor*)tintColor
+{
+    if (!image) return nil;
+    NSParameterAssert([tintColor isKindOfClass:[UIColor class]]);
+ 
+    //Credits: https://gist.github.com/omz/1102091
+    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, image.scale);
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    [image drawInRect:rect];
+    CGContextSetFillColorWithColor(c, [tintColor CGColor]);
+    CGContextSetBlendMode(c, kCGBlendModeSourceAtop);
+    CGContextFillRect(c, rect);
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return result;
 }
 
 #pragma mark -- activity
