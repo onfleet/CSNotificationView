@@ -54,9 +54,7 @@
     modalController.view.backgroundColor = [UIColor whiteColor];
     modalController.navigationItem.title = @"Modal";
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:modalController];
-    if (@available(iOS 13.0, *)) {
-        navController.modalPresentationStyle = isFullscreen ? UIModalPresentationFullScreen : UIModalPresentationAutomatic;
-    }
+    navController.modalPresentationStyle = isFullscreen ? UIModalPresentationFullScreen : UIModalPresentationAutomatic;
     
     __weak UIViewController *weakModalController = modalController;
 
